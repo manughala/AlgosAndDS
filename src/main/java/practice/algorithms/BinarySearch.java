@@ -2,6 +2,7 @@ package practice.algorithms;
 
 /**
  * Implements binary search.
+ *
  * Worst case time complexity : O(logn)
  * Best case time complexity: O(1)
  * Average case time complexity: O(logn)
