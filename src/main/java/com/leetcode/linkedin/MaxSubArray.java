@@ -66,7 +66,7 @@ public class MaxSubArray {
 
     // Time O(n)
     // Space O(1)
-    // simple idea: find max sum till now, and current sum will be max of current item or current item +previous
+    // simple idea: find max sum till now, and current sum will be max of current item or current item + previous
     // explanation: kadanes algo: https://www.youtube.com/watch?v=86CQq3pKSUw
     private static int maxSubArrayBestCaseLinear(int[] nums) {
         int maxGlobal, currentCount;

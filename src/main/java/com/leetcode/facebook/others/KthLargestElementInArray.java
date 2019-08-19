@@ -31,8 +31,8 @@ public class KthLargestElementInArray {
         int k = 2;
 
 //        System.out.println("Case 1: " + getIndexOfKthLargestElementI(input, k));
-//        System.out.println("Case 2: " + getIndexOfKthLargestElementII(input, k));
-        System.out.println("Case 3: " + getIndexOfKthLargestElementIIIBestCase(input, k));
+        System.out.println("Case 2: " + getIndexOfKthLargestElementII(input, k));
+//        System.out.println("Case 3: " + getIndexOfKthLargestElementIIIBestCase(input, k));
     }
 
     // Time: O(nlogn) -> sorting nlogn, access O(1)
@@ -71,7 +71,6 @@ public class KthLargestElementInArray {
     }
 
     private static int quickSelect(int[] input, int left, int right, int kSmallest) {
-
         if(left == right) {
             return input[left];
         }

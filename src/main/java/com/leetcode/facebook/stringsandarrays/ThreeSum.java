@@ -41,8 +41,8 @@ public class ThreeSum {
         }
 
 //        List<List<Integer>> result = bruteForceThreeSum(nums, 0);
-        List<List<Integer>> result = bestCaseThreeSum(nums, 0);
         //time complexity is O(N^2) and space complexity is O(1).
+        List<List<Integer>> result = bestCaseThreeSum(nums, 0);
 
         for (List<Integer> list : result) {
             System.out.println(list);
@@ -52,10 +52,10 @@ public class ThreeSum {
 
     private static List<List<Integer>> bestCaseThreeSum(int[] nums, int sum) {
         List<List<Integer>> result = new ArrayList<>();
-//        Arrays.sort(nums);
+        Arrays.sort(nums);
 
 
-        for(int i = 0; i < nums.length-2; i++) {
+        for(int i = 0; i < nums.length - 2; i++) {
             // Never let i refer to the same value twice to avoid duplicates.
             if(i == 0 || nums[i] > nums[i-1]) {
                 int j = i + 1, k = nums.length - 1;

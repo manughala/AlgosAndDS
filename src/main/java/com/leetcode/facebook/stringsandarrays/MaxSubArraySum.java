@@ -50,7 +50,7 @@ public class MaxSubArraySum {
 
         while(i < nums.length) {
             int count = 0;
-            for(int j = i; j<nums.length; j++) {
+            for(int j = i; j < nums.length; j++) {
                 count += nums[j];
                 if(count == sum && j- i + 1 > maxLength) {
                     maxFound = true;

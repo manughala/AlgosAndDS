@@ -70,7 +70,7 @@ public class WordLadder {
     }
 
     // Accepted leetcode
-    // Time: O(M*N0 -> m - number of words n is length of each word
+    // Time: O(M*N) -> m - number of words n is length of each word
     // Space: O(n)
     private static int ladderLengthII(String beginWord, String endWord, List<String> wordList) {
         if (wordList == null || !wordList.contains(endWord)) {

@@ -42,7 +42,7 @@ public class LongestPalindromicSubstring {
     }
 
     // IDEA: for every i, find all the palindromes (even and odd), meaning to find palindromes for all odd length strings, pick i as the
-    // pivot and start expanding as long as string is palindrome. Same with even lenght, except that we have 2 pivots i, i+1
+    // pivot and start expanding as long as string is palindrome. Same with even length, except that we have 2 pivots i, i+1
     //
     // idea from https://www.geeksforgeeks.org/longest-palindromic-substring-set-2/
     // implementation from https://www.baeldung.com/java-palindrome-substrings
@@ -58,7 +58,7 @@ public class LongestPalindromicSubstring {
         currentLongestPalindrome = s.substring(0, 1);
         for(int i = 0; i < s.length(); i++) {
             getPalindrome(s, i, i);
-            getPalindrome(s, i, i+1);
+            getPalindrome(s, i, i + 1);
         }
 
         return currentLongestPalindrome;

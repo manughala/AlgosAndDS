@@ -52,14 +52,14 @@ public class ValidateBinarySearchTree {
         TreeNode node1 = new TreeNode(2);
         node1.left = new TreeNode(1);
         node1.right = new TreeNode(3);
-        System.out.println("expected: true; actual: " + isValidBSTRecurBruteForce(node1));
+        System.out.println("expected: true; actual: " + isValidBestCase(node1));
 
         TreeNode node2 = new TreeNode(5);
         node2.left = new TreeNode(1);
         node2.right = new TreeNode(4);
         node2.right.left = new TreeNode(3);
         node2.right.right = new TreeNode(6);
-        System.out.println("expected: false; actual: " + isValidBSTRecurBruteForce(node2));
+        System.out.println("expected: false; actual: " + isValidBestCase(node2));
 
         TreeNode node3 = new TreeNode(10);
         node3.left = new TreeNode(5);
@@ -106,7 +106,7 @@ public class ValidateBinarySearchTree {
             node = temp.right;
         }
 
-        return false;
+        return true;
     }
 
     private static boolean isValidBSTRecurBruteForce(TreeNode node) {

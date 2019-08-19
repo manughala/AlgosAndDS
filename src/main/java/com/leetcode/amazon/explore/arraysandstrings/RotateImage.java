@@ -1,4 +1,4 @@
-package com.leetcode.microsoft.arraysandstrings;
+package com.leetcode.amazon.explore.arraysandstrings;
 
 /**
  * You are given an n x n 2D matrix representing an image.
@@ -45,7 +45,6 @@ package com.leetcode.microsoft.arraysandstrings;
  * @author Santosh Manughala (SM030146).
  */
 public class RotateImage {
-
     public static void main(String args[]) {
         int[][] input1 = new int[3][3];
         input1[0][0] = 1;
@@ -76,18 +75,18 @@ public class RotateImage {
         input2[3][2] = 12;
         input2[3][3] = 16;
 
-        System.out.println("rotateMatrixBruteForce: ");
-        System.out.println("before : ");
-        printMatrix(input1);
-        int[][] result1 = rotateMatrixBruteForce(input1);
-        System.out.println("after : ");
-        printMatrix(result1);
-
-        System.out.println("before : ");
-        printMatrix(input2);
-        int[][] result2 = rotateMatrixBruteForce(input2);
-        System.out.println("after : ");
-        printMatrix(result2);
+//        System.out.println("rotateMatrixBruteForce: ");
+//        System.out.println("before : ");
+//        printMatrix(input1);
+//        int[][] result1 = rotateMatrixBruteForce(input1);
+//        System.out.println("after : ");
+//        printMatrix(result1);
+//
+//        System.out.println("before : ");
+//        printMatrix(input2);
+//        int[][] result2 = rotateMatrixBruteForce(input2);
+//        System.out.println("after : ");
+//        printMatrix(result2);
 
 //        System.out.println("rotateMatrixIntermediateCaseI: ");
 //        System.out.println("before : ");
@@ -103,21 +102,21 @@ public class RotateImage {
 //        rotateMatrixIntermediateCaseI(input2Copy);
 //        System.out.println("after : ");
 //        printMatrix(input2Copy);
-//
+
 //        System.out.println("rotateMatrixBestCase: ");
 //        System.out.println("before : ");
-//        int[][] input1Copy = copyMatrix(input1);
-//        printMatrix(input1Copy);
-//        rotateMatrixBestCase(input1Copy);
+//        int[][] input1Copy1 = copyMatrix(input1);
+//        printMatrix(input1Copy1);
+//        rotateMatrixBestCase(input1Copy1);
 //        System.out.println("after : ");
-//        printMatrix(input1Copy);
+//        printMatrix(input1Copy1);
 //
 //        System.out.println("before : ");
-//        int[][] input2Copy = copyMatrix(input2);
-//        printMatrix(input2Copy);
-//        rotateMatrixBestCase(input2Copy);
+//        int[][] input2Copy1 = copyMatrix(input2);
+//        printMatrix(input2Copy1);
+//        rotateMatrixBestCase(input2Copy1);
 //        System.out.println("after : ");
-//        printMatrix(input2Copy);
+//        printMatrix(input2Copy1);
     }
 
     private static void printMatrix(int[][] result) {
@@ -138,30 +137,32 @@ public class RotateImage {
         return result;
     }
 
-    // IDEA: In one pass, imagine where the new positions should be and now that we know the new positions, just swap to that position directly
-    //
-    // Time O(N^2)
-    // Space O(1)
+    // Time O(N*N)
+    // Space: O(1)
     private static void rotateMatrixBestCase(int[][] matrix) {
         if(matrix == null || matrix.length == 0) {
             return;
         }
 
-        // for i consider odd lengths
-        for(int i = 0; i < (matrix.length + 1)/2; i++) {
-            //for j consider even lengths
-            for(int j = 0; j < matrix.length/2 ; j++) {
-                int pi = matrix.length - i - 1;
-                int pj = matrix.length - j - 1;
-                // i 0 j 0 pi 2 pj 2
-                // 00
-                // temp = 20
+        int len = matrix.length;
+
+        for(int i = 0; i < (len + 1) / 2; i++) {
+            for(int j = 0; j < len / 2; j++) {
+                // temp = 10
+                // 10 = 21
+                // 21 = 12
+                // 12 = 01
+                // 01 = temp
+
+                // temp = 00
+                // 00 = 20
                 // 20 = 22
                 // 22 = 02
-                // 02 = 00
-                // 00 = 20
-                // imagine the position of ij, and what should go in i,j.. move the one that should go to i,j to temp
-                // start traversing from there.
+                // 02 = temp
+                // i = 0 j = 2 pi = 2 pj = 0
+                // i = 0 j = 1 pi = 2 pj = 1
+                int pi = len - i - 1, pj = len - j - 1;
+
                 int temp = matrix[pj][i];
                 matrix[pj][i] = matrix[pi][pj];
                 matrix[pi][pj] = matrix[j][pi];
@@ -169,58 +170,29 @@ public class RotateImage {
                 matrix[i][j] = temp;
             }
         }
+
     }
 
-    // IDEA: transpose the matrix - meaning 0 row will be 0 col, 1 row will be 1 col, etc
-    // then reverse the matrix, which will give the desired result
-    // Time O(N^2)
-    // Space O(1)
-    private static void rotateMatrixIntermediateCaseI(int[][] matrix) {
-        if(matrix == null || matrix.length == 0) {
-            return;
-        }
+    // NOTE FOR rotateMatrixIntermediateCaseI please refer {@link com.leetcode.microsoft.arraysandstrings.RotateImage#rotateMatrixIntermediateCaseI}
 
-        // transpose
-        for(int i = 0; i < matrix.length; i++) {
-            for(int j = i; j < matrix.length ; j++) {
-                swap(matrix, i, j, j, i);
-            }
-        }
 
-        //reverse
-        for(int i = 0; i < matrix.length; i++) {
-            for(int j = 0; j < matrix.length / 2 ; j++) {
-                swap(matrix, i, j, i, matrix.length - 1 - j);
-            }
-        }
-    }
 
-    private static void swap(int[][] matrix, int i, int j, int newI, int newJ) {
-        int temp = matrix[newI][newJ];
-        matrix[newI][newJ] = matrix[i][j];
-        matrix[i][j] = temp;
-    }
-
-    // NOTE: This is NOT in place
-    // Time: O(N^2) -> since given in n*n matrix
-    // Space: O(N^2)
+    // NOT inplace:
+    // Time O(N*N)
+    // Space: O(N*N)
     private static int[][] rotateMatrixBruteForce(int[][] matrix) {
-        if(matrix == null || matrix.length == 0) {
-            return matrix;
-        }
-
         int[][] result = new int[matrix.length][matrix.length];
 
-
         for(int i = 0; i < matrix.length; i++) {
-            int q = matrix.length - 1 - i;
+            int temp = matrix.length - i - 1;
 
             for(int j = 0; j < matrix[0].length; j++) {
-                result[j][q] = matrix[i][j];
-
+                result[j][temp] = matrix[i][j];
             }
         }
 
         return result;
     }
+
+
 }

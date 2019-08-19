@@ -1,5 +1,6 @@
 package com.leetcode.linkedin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,17 +30,39 @@ public class SerializeAndDeserializeBinaryTree {
         node.left.left.left = new TreeNode(9);
         node.left.left.right = new TreeNode(8);
 
-        String serializedStringIter = serializeIter(node);
-        System.out.println("serializedStringIter = " + serializedStringIter);
+        List<String> preOrder = new ArrayList<>();
+        preOrder.add("4");
+        preOrder.add("2");
+        preOrder.add("1");
+        preOrder.add("3");
+        preOrder.add("6");
+        preOrder.add("5");
+        preOrder.add("7");
+        TreeNode node1 = deserializeBinaryTree(preOrder);
+        System.out.println("something: ");
+        printPreOrder(node1);
 
-        String serializedStringRecur = serializeRecur(node);
-        System.out.println("serializedStringRecur = " + serializedStringRecur);
+//        String serializedStringIter = serializeIter(node);
+//        System.out.println("serializedStringIter = " + serializedStringIter);
+//
+//        String serializedStringRecur = serializeRecur(node);
+//        System.out.println("serializedStringRecur = " + serializedStringRecur);
+//
+//        TreeNode deserializedIter = deserialize(serializedStringIter);
+//        System.out.println(deserializedIter.val);
+//
+//        TreeNode deserializedRecur = deserialize(serializedStringRecur);
+//        System.out.println(deserializedRecur.val);
+    }
 
-        TreeNode deserializedIter = deserialize(serializedStringIter);
-        System.out.println(deserializedIter.val);
+    private static void printPreOrder(TreeNode node) {
+        if(node == null) {
+            return;
+        }
 
-        TreeNode deserializedRecur = deserialize(serializedStringRecur);
-        System.out.println(deserializedRecur.val);
+        System.out.println(node.val);
+        printPreOrder(node.left);
+        printPreOrder(node.right);
     }
 
     private static String serializeIter(TreeNode node) {
@@ -71,6 +94,29 @@ public class SerializeAndDeserializeBinaryTree {
         }
 
         return result;
+    }
+
+    private static TreeNode deserializeBinaryTree(List<String> preorder) {
+        TreeNode node = new TreeNode(Integer.parseInt(preorder.get(0)));
+        preorder.remove(0);
+
+        if(preorder.size() <= 0) {
+            return node;
+        }
+
+        if(Integer.parseInt(preorder.get(0)) < node.val) {
+            node.left = deserializeBinaryTree(preorder);
+        }
+
+        if(preorder.size() <= 0) {
+            return node;
+        }
+
+        if(Integer.parseInt(preorder.get(0)) > node.val) {
+            node.right = deserializeBinaryTree(preorder);
+        }
+
+        return node;
     }
 
     private static String serializeRecur(TreeNode node) {
