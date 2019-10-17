@@ -51,13 +51,13 @@ public class ReverseWordsInAString {
             return "";
         }
 
-        String splitArray[] = s.trim().split(" ");
+        String splitArray[] = s.trim().split("\\s+");
         StringBuilder result = new StringBuilder();
 
         for(int i = splitArray.length - 1; i >= 0 ; i--) {
-            if(!splitArray[i].isEmpty()) {
-                result.append(splitArray[i] + " ");
-            }
+//            if(!splitArray[i].isEmpty()) {
+            result.append(splitArray[i] + " ");
+//            }
         }
 
         return result.toString().trim();

@@ -1,6 +1,11 @@
 package com.leetcode.amazon.explore.design;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
+
 /**
  * Design a max stack that supports push, pop, top, peekMax and popMax.
 
@@ -47,53 +52,153 @@ public class MaxStack {
         System.out.println("Expected: 5, actual: " + maxStack.top());
     }
 
-    public Stack<Integer> stack;
-    public Stack<Integer> maxStack;
-
+    TreeMap<Integer, List<ListNode>> map;
+    DoublyLinkedList list;
     public MaxStack() {
-        this.stack = new Stack<>();
-        this.maxStack = new Stack<>();
+        map = new TreeMap();
+        list = new DoublyLinkedList();
     }
 
-    // Time: O(1)
+    // Time: O(logn)
     public void push(int x) {
-        int max = maxStack.isEmpty() ? x : maxStack.peek();
-        maxStack.push(x > max ? x : max);
-        stack.push(x);
+        ListNode node = list.add(x);
+        List<ListNode> nodes = map.getOrDefault(x, new ArrayList<>());
+        nodes.add(node);
+        map.put(x, nodes);
     }
 
-    // Time: O(1)
+    // Time: O(logn)
     public int pop() {
-        maxStack.pop();
-        return stack.pop();
+        int value = list.pop();
+
+        List<ListNode> listNodes = map.get(value);
+        listNodes.remove(listNodes.size() - 1);
+        if(listNodes.isEmpty()) {
+            map.remove(value);
+        }
+        return value;
     }
 
     // Time: O(1)
     public int top() {
-        return stack.peek();
+        return list.peek();
     }
 
-    // Time: O(1)
+    // Time: O(logn)
     public int peekMax() {
-        return maxStack.peek();
+        return map.lastKey();
     }
 
-    // Time: O(N) -> n is number of operations performed so far
-    // in order to reduce this to logN, we can use doubly linked list
+    // Time: O(logn)
     public int popMax() {
-        int max = peekMax();
+        int max = list.peek();
+        List<ListNode> nodes = map.get(max);
+        ListNode node = nodes.remove(nodes.size() - 1);
+        list.remove(node);
 
-        Stack<Integer> temp = new Stack<>();
-        while(max != stack.peek()) {
-            temp.push(pop());
-        }
-
-        pop();
-
-        while (!temp.isEmpty()) {
-            push(temp.pop());
+        if(nodes.isEmpty()) {
+            map.remove(node);
         }
 
         return max;
     }
+
+
+
+    private class DoublyLinkedList {
+        ListNode head, tail;
+
+        DoublyLinkedList() {
+            head = new ListNode(0);
+            tail = new ListNode(0);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+
+        private int peek() {
+            return tail.prev.value;
+        }
+
+        private ListNode add(int value) {
+            ListNode node = new ListNode(value);
+            node.next = tail;
+            node.prev = tail.prev;
+            tail.prev.next = node;
+            tail.prev = node;
+
+            return node;
+        }
+
+        private int pop() {
+            return remove(tail.prev);
+        }
+
+        private int remove(ListNode node) {
+            node.prev.next = node.next;
+            if(node.next != null) {
+                node.next.prev = node.prev;
+            }
+            return node.value;
+        }
+    }
+
+    private class ListNode {
+        int value;
+        ListNode next, prev;
+
+        ListNode(int value) {
+            this.value = value;
+        }
+    }
+
+//    public Stack<Integer> stack;
+//    public Stack<Integer> maxStack;
+//
+//    public MaxStack() {
+//        this.stack = new Stack<>();
+//        this.maxStack = new Stack<>();
+//    }
+//
+//    // Time: O(1)
+//    public void push(int x) {
+//        int max = maxStack.isEmpty() ? x : maxStack.peek();
+//        maxStack.push(x > max ? x : max);
+//        stack.push(x);
+//    }
+//
+//    // Time: O(1)
+//    public int pop() {
+//        maxStack.pop();
+//        return stack.pop();
+//    }
+//
+//    // Time: O(1)
+//    public int top() {
+//        return stack.peek();
+//    }
+//
+//    // Time: O(1)
+//    public int peekMax() {
+//        return maxStack.peek();
+//    }
+//
+//    // Time: O(N) -> n is number of operations performed so far
+//    // in order to reduce this to logN, we can use doubly linked list
+//    public int popMax() {
+//        int max = peekMax();
+//
+//        Stack<Integer> temp = new Stack<>();
+//        while(max != stack.peek()) {
+//            temp.push(pop());
+//        }
+//
+//        pop();
+//
+//        while (!temp.isEmpty()) {
+//            push(temp.pop());
+//        }
+//
+//        return max;
+//    }
 }

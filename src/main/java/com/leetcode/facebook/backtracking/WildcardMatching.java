@@ -53,7 +53,7 @@ public class WildcardMatching {
         String input = "aaaabc";
         String pattern = "*b?";
 
-        System.out.println(isMatchBestCaseIII("adefghbsomethigdc", "******a*****b****c"));
+        System.out.println(isMatchBestCaseII("adefghbsomethigdc", "******a*****b****c"));
 //        System.out.println(isMatchBestCaseIII(input, pattern));
 //        System.out.println(isMatchBestCaseI(input, pattern));
 //        System.out.println(isMatchBestCaseI(input, null));

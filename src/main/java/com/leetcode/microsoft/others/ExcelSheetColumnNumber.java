@@ -66,8 +66,7 @@ public class ExcelSheetColumnNumber {
         int columnNumber = 0;
 
         for(char c : chars) {
-            columnNumber *= 26;
-            columnNumber += (c - 'A') + 1;
+            columnNumber = (columnNumber * 26) + (c - 'A') + 1;
         }
 
         return columnNumber;
